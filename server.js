@@ -6,12 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Mock User
-const user = {
-    email: "admin@gmail.com",
-    password: "123456"
-};
-
 // Home Route
 app.get("/", (req, res) => {
     res.send("CineWave Backend Running");
@@ -24,6 +18,7 @@ app.post("/login", (req, res) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // Email Validation
     if (!emailRegex.test(email)) {
         return res.status(400).json({
             success: false,
@@ -31,6 +26,7 @@ app.post("/login", (req, res) => {
         });
     }
 
+    // Password Validation
     if (password.length < 6) {
         return res.status(400).json({
             success: false,
@@ -44,7 +40,9 @@ app.post("/login", (req, res) => {
     });
 });
 
+// Render Deployment Port
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
